@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class GenerateSignatureTest extends TestCase
 {
-    public function testGenerateSignatureInvalidAccessKey(): void
+    public function testGenerateSignatureProducesExpectedOutput(): void
     {
         $accessKey = 'Fp4SvIprYSDPXtYJidEtUAd1o';
         $secretKey = 'WIbFEKre0s6sLnh4ei7SPUeYnptHG6V';
