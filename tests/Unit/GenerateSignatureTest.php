@@ -7,12 +7,6 @@ namespace MarjovanLier\EcoFlow\Tests\Unit;
 use MarjovanLier\EcoFlow\EcoFlow;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @covers \MarjovanLier\EcoFlow\EcoFlow::generateSignature
- * @covers \MarjovanLier\EcoFlow\EcoFlow::flattenData
- */
 final class GenerateSignatureTest extends TestCase
 {
     public function testGenerateSignatureProducesExpectedOutput(): void
@@ -30,10 +24,10 @@ final class GenerateSignatureTest extends TestCase
             'sn' => '123456789',
         ];
 
-        $ecoFlow = new EcoFlow();
+        $ecoFlow = new EcoFlow($accessKey, $secretKey);
         $expectedSignature = '07c13b65e037faf3b153d51613638fa80003c4c38d2407379a7f52851af1473e';
 
-        $signature = $ecoFlow->generateSignature($accessKey, $secretKey, $nonce, $timestamp, $data);
+        $signature = $ecoFlow->generateSignature($nonce, $timestamp, $data);
 
         self::assertEquals($expectedSignature, $signature);
     }
@@ -50,11 +44,32 @@ final class GenerateSignatureTest extends TestCase
             'sn' => '123456789',
         ];
 
-        $ecoFlow = new EcoFlow();
+        $ecoFlow = new EcoFlow('', '');
         $expectedFlattenData = [
             'params.cmdSet' => 11,
             'params.eps' => 0,
             'params.id' => 24,
+            'sn' => '123456789',
+        ];
+
+        $flattenData = $ecoFlow->flattenData($data);
+
+        self::assertEquals($expectedFlattenData, $flattenData);
+    }
+
+
+    public function testGenerateFlattenData2(): void
+    {
+        $data = [
+            'params' => [
+                'quotas' => ['20_1.supplyPriority']
+            ],
+            'sn' => '123456789',
+        ];
+
+        $ecoFlow = new EcoFlow('', '');
+        $expectedFlattenData = [
+            'params.quotas' => '20_1.supplyPriority',
             'sn' => '123456789',
         ];
 
