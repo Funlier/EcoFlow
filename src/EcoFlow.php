@@ -165,7 +165,7 @@ readonly class EcoFlow
      * @return array{
      *      code: string,
      *      message?: string,
-     *      data: array<int, array{sn?: string, deviceName?: string, online?: bool}>,
+     *      data: array<mixed>,
      *      eagleEyeTraceId: string,
      *      tid: string
      *  } The response from the HTTP request as an associative array.
@@ -385,14 +385,11 @@ readonly class EcoFlow
     {
         $nonce = $this->createNonce();
         $timestamp = $this->createTimestamp();
-
         $data = [
             'params' => $params,
             'sn' => $deviceSN,
         ];
-
         $signature = $this->generateSignature($nonce, $timestamp, $data);
-
         $url = 'https://api-e.ecoflow.com/iot-open/sign/device/quota';
 
         $headers = [
@@ -453,9 +450,7 @@ readonly class EcoFlow
     {
         $nonce = $this->createNonce();
         $timestamp = $this->createTimestamp();
-
         $signature = $this->generateSignature($nonce, $timestamp, []);
-
         $url = 'https://api-e.ecoflow.com/iot-open/sign/device/list';
         $headers = [
             'accessKey' => $this->accessKey,
@@ -465,7 +460,84 @@ readonly class EcoFlow
             'timestamp' => $timestamp,
         ];
 
-        return $this->makeRequest($url, 'GET', $headers);
+        /**
+         * @var array{
+         *       code: string,
+         *       message?: string,
+         *       data: array<int, array{
+         *           sn?: string,
+         *           deviceName?: string,
+         *           online?: bool,
+         *       }>,
+         *       eagleEyeTraceId: string,
+         *       tid: string
+         *   } $return
+         */
+        $return = $this->makeRequest($url, 'GET', $headers);
+
+        return $return;
+    }
+
+
+    /**
+     * Retrieves the certification information for the application from the EcoFlow API.
+     *
+     * This function generates necessary security parameters (nonce, timestamp, and signature) and makes a GET request to
+     * the EcoFlow API endpoint to retrieve the certification information. The retrieved data includes the certificate
+     * account, password, URL, port, and protocol, which are likely used for establishing an MQTT connection with the
+     * EcoFlow API.
+     *
+     * @return array{
+     *     code: string,
+     *     message?: string,
+     *     data: array{
+     *      certificateAccount: string,
+     *      certificatePassword: string,
+     *      url: string,
+     *      port: string,
+     *      protocol: string
+     *     },
+     *     eagleEyeTraceId: string,
+     *     tid: string
+     * }
+     *
+     * @psalm-suppress PossiblyUnusedMethod
+     *
+     * @throws DecodingExceptionInterface|Exception|RandomException|TransportExceptionInterface
+     */
+    public function getAppCertification(): array
+    {
+        $nonce = $this->createNonce();
+        $timestamp = $this->createTimestamp();
+        $signature = $this->generateSignature($nonce, $timestamp, []);
+        $url = 'https://api-e.ecoflow.com/iot-open/sign/certification';
+
+        $headers = [
+            'accessKey' => $this->accessKey,
+            'Content-Type' => 'application/json',
+            'nonce' => $nonce,
+            'sign' => $signature,
+            'timestamp' => $timestamp,
+        ];
+
+        /**
+         * @var array{
+         *      code: string,
+         *      message?: string,
+         *      data: array{
+         *       certificateAccount: string,
+         *       certificatePassword: string,
+         *       url: string,
+         *       port: string,
+         *       protocol: string
+         *      },
+         *      eagleEyeTraceId: string,
+         *      tid: string
+         *  } $return
+         */
+        $return = $this->makeRequest($url, 'GET', $headers);
+
+        return $return;
     }
 
 
