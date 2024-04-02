@@ -482,10 +482,10 @@ readonly class EcoFlow
     /**
      * Retrieves the certification information for the application from the EcoFlow API.
      *
-     * This function generates necessary security parameters (nonce, timestamp, and signature) and makes a GET request to
-     * the EcoFlow API endpoint to retrieve the certification information. The retrieved data includes the certificate
-     * account, password, URL, port, and protocol, which are likely used for establishing an MQTT connection with the
-     * EcoFlow API.
+     * This function generates necessary security parameters (nonce, timestamp, and signature) and makes a GET request
+     * to the EcoFlow API endpoint to retrieve the certification information. The retrieved data includes the
+     * certificate account, password, URL, port, and protocol, which are likely used for establishing an MQTT
+     * connection with the EcoFlow API.
      *
      * @return array{
      *     code: string,
