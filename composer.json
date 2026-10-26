@@ -43,6 +43,7 @@
     "symfony/http-client-contracts": "^3.4"
   },
   "require-dev": {
+    "carthage-software/mago": ">=1.59.0",
     "enlightn/security-checker": ">=2.0",
     "infection/infection": ">=0.27.11",
     "laravel/pint": ">=1.15.1",
@@ -64,6 +65,7 @@
     "test:composer-validate": "Ensure 'composer.json' is valid and consistent.",
     "test:infection": "Conduct mutation testing for robustness.",
     "test:lint": "Search for syntax errors and problematic patterns.",
+    "test:mago": "Lint and analyse code with Mago.",
     "test:phan": "Perform static analysis with Phan to identify code issues.",
     "test:phpmd": "Detect bugs and suboptimal code with PHP Mess Detector.",
     "test:phpstan": "Use PHPStan for static analysis and bug detection.",
@@ -89,12 +91,17 @@
       "@test:phpstan",
       "@test:phan",
       "@test:psalm",
-      "@test:rector"
+      "@test:rector",
+      "@test:mago"
     ],
     "test:code-style": "pint --test",
     "test:composer-validate": "composer validate --strict",
     "test:infection": "php -d memory_limit=-1 -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/infection --threads=4 --show-mutations",
     "test:lint": "parallel-lint --exclude vendor --show-deprecated .",
+    "test:mago": [
+      "mago lint",
+      "mago analyze"
+    ],
     "test:phan": "phan --allow-polyfill-parser --no-progress-bar",
     "test:phpmd": "phpmd src,tests text phpmd.xml",
     "test:phpstan": "phpstan analyse --no-progress --no-interaction",

@@ -25,5 +25,10 @@
                 <directory name="tests"/>
             </errorLevel>
         </UnusedClass>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
     </issueHandlers>
 </psalm>

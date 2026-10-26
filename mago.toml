@@ -1,0 +1,49 @@
+#:schema https://mago.carthage.software/1.59.0/schema.json
+# For full documentation, see https://mago.carthage.software/1.59.0/en/tools/overview/
+version = "1"
+# composer.json supports PHP ^8.2, so analyse against the lowest supported version.
+php-version = "8.2.0"
+
+[source]
+workspace = "."
+paths = ["src", "tests"]
+includes = ["vendor"]
+excludes = []
+
+[source.glob]
+literal-separator = true
+
+[linter]
+integrations = ["phpunit"]
+
+[linter.rules]
+ambiguous-function-call = { enabled = false }
+literal-named-argument = { enabled = false }
+halstead = { effort-threshold = 7000 }
+# The suite has always called PHPUnit assertions through self::.
+assertion-style = { style = "self" }
+# The returned variables carry the @var array shapes PHPStan needs; inlining them drops the shape.
+inline-variable-return = { enabled = false }
+# Single API client class by design; class size and complexity limits are governed by PHPMD.
+too-many-methods = { enabled = false }
+cyclomatic-complexity = { enabled = false }
+
+[analyzer]
+# Test methods do not declare what their assertions and the calls under test may throw.
+ignore = [{ code = "unhandled-thrown-type", in = ["tests/"] }]
+plugins = []
+find-unused-definitions = true
+find-unused-expressions = true
+analyze-dead-code = true
+memoize-properties = true
+check-throws = true
+unchecked-exceptions = ["Error", "LogicException"]
+unchecked-exception-classes = []
+check-missing-override = true
+find-unused-parameters = true
+strict-list-index-checks = true
+strict-array-index-existence = true
+allow-array-truthy-operand = false
+no-boolean-literal-comparison = true
+check-missing-type-hints = true
+register-super-globals = true
