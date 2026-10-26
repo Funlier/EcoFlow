@@ -129,6 +129,12 @@ jobs:
         if: steps.psalm.outcome == 'success'
         run: composer test:rector
 
+      # This step lints and analyses the code with Mago.
+      - name: Run static analysis with Mago
+        id: mago
+        if: steps.rector.outcome == 'success'
+        run: composer test:mago
+
   release:
     needs: build
     runs-on: ubuntu-latest
