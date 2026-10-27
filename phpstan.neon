@@ -3,7 +3,9 @@ includes:
 
 parameters:
     level: max
-    phpVersion: 80200
+    phpVersion:
+        min: 80200
+        max: 80599
     treatPhpDocTypesAsCertain: false
     tipsOfTheDay: false
     reportWrongPhpDocTypeInVarTag: true
