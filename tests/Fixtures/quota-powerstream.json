@@ -1,0 +1,22 @@
+{
+    "code": "0",
+    "message": "Success",
+    "data": {
+        "20_134.task10": {"taskIndex": 9, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task11": {"taskIndex": 10, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_1.fisoRxyz": 0.0,
+        "20_134.task7": {"taskIndex": 6, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task6": {"taskIndex": 5, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task9": {"taskIndex": 8, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task8": {"taskIndex": 7, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task3": {"taskIndex": 2, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task2": {"taskIndex": 1, "tzOffset": 7200, "type": 2, "timeRange": {"isConfig": true, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 8, "month": 8, "year": 2025, "day": 21}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task5": {"taskIndex": 4, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task4": {"taskIndex": 3, "type": 0, "timeRange": {"isConfig": false, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": false}},
+        "20_134.task1": {"taskIndex": 0, "tzOffset": 7200, "type": 1, "timeRange": {"isConfig": true, "timeData": 0, "timeMode": 0, "startTime": {"sec": 0, "week": 0, "min": 0, "hour": 14, "month": 8, "year": 2025, "day": 19}, "stopTime": {"sec": 0, "week": 0, "min": 0, "hour": 0, "month": 0, "year": 0, "day": 0}, "isEnable": true}},
+        "20_134.updateTime": "2026-10-27 11:46:14",
+        "20_1.updateTime": "2026-10-27 12:53:34"
+    },
+    "eagleEyeTraceId": "",
+    "tid": ""
+}

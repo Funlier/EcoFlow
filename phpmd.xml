@@ -10,7 +10,15 @@
     <rule ref="rulesets/unusedcode.xml"/>
     <rule ref="rulesets/codesize.xml"/>
     <rule ref="rulesets/design.xml"/>
-    <rule ref="rulesets/naming.xml"/>
+    <rule ref="rulesets/naming.xml">
+        <exclude name="LongMethodName"/>
+    </rule>
+    <!-- PHPUnit test method names describe the behaviour under test, so they run longer than the default 40. -->
+    <rule ref="rulesets/naming.xml/LongMethodName">
+        <properties>
+            <property name="maximum" value="60"/>
+        </properties>
+    </rule>
     <rule ref="rulesets/cleancode.xml">
         <exclude name="StaticAccess"/>
     </rule>

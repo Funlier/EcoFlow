@@ -1,0 +1,13 @@
+{
+    "code": "0",
+    "message": "Success",
+    "data": {
+        "certificateAccount": "open-0000000000000000",
+        "certificatePassword": "00000000000000000000000000000000",
+        "url": "mqtt-e.ecoflow.com",
+        "port": "8883",
+        "protocol": "mqtts"
+    },
+    "eagleEyeTraceId": "",
+    "tid": ""
+}

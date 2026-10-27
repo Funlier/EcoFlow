@@ -4,7 +4,6 @@ includes:
 parameters:
     level: max
     phpVersion: 80200
-    checkMissingIterableValueType: true
     treatPhpDocTypesAsCertain: false
     tipsOfTheDay: false
     reportWrongPhpDocTypeInVarTag: true

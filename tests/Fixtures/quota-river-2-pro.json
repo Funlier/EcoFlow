@@ -1,0 +1,28 @@
+{
+    "code": "0",
+    "message": "Success",
+    "data": {
+        "pd.usb1Watts": 0,
+        "bms_emsStatus.maxChargeSoc": 100,
+        "mppt.cfgAcXboost": 1,
+        "mppt.cfgAcEnabled": 0,
+        "pd.bpPowerSoc": 50,
+        "mppt.cfgAcOutVol": 230,
+        "inv.inputWatts": 0,
+        "inv.outputWatts": 0,
+        "pd.carWatts": 0,
+        "pd.watchIsConfig": 0,
+        "bms_emsStatus.minDsgSoc": 0,
+        "pd.typecChaWatts": 0,
+        "pd.typec1Watts": 14,
+        "bms_bmsStatus.remainTime": 0,
+        "pd.soc": 79,
+        "mppt.inWatts": 0,
+        "pd.carState": 0,
+        "pd.wattsOutSum": 8,
+        "mppt.cfgAcOutFreq": 50,
+        "bms_emsStatus.dsgRemainTime": 5999
+    },
+    "eagleEyeTraceId": "",
+    "tid": ""
+}
