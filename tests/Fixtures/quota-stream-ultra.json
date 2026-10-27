@@ -1,0 +1,23 @@
+{
+    "code": "0",
+    "message": "Success",
+    "data": {
+        "cmsMaxChgSoc": 100,
+        "feedGridMode": 1,
+        "cmsMinDsgSoc": 0,
+        "gridConnectionPower": -153.46432,
+        "relay3Onoff": false,
+        "powGetPvSum": 0.0,
+        "energyStrategyOperateMode.operateIntelligentScheduleModeOpen": true,
+        "powGetSysGrid": 853.0,
+        "powGetSysLoad": 608.391,
+        "energyStrategyOperateMode.operateSelfPoweredOpen": false,
+        "cmsBattSoc": 55.0,
+        "backupReverseSoc": 33,
+        "quota_cloud_ts": "2026-10-27 12:53:35",
+        "powGetBpCms": 244.60901,
+        "relay2Onoff": false
+    },
+    "eagleEyeTraceId": "",
+    "tid": ""
+}

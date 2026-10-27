@@ -1,0 +1,21 @@
+{
+    "code": "0",
+    "message": "Success",
+    "data": [
+        {"sn": "BK11000000000001", "deviceName": "Device 01", "online": 1},
+        {"sn": "BK11000000000002", "deviceName": "Device 02", "online": 1},
+        {"sn": "BK31000000000003", "deviceName": "Device 03", "online": 1},
+        {"sn": "ES41000000000004", "deviceName": "Device 04", "online": 1},
+        {"sn": "HW51000000000005", "deviceName": "Device 05", "online": 1, "productName": "PowerStream"},
+        {"sn": "HW52000000000006", "deviceName": "Device 06", "online": 1, "productName": "Smart Plug"},
+        {"sn": "HW52000000000007", "deviceName": "Device 07", "online": 1, "productName": "Smart Plug"},
+        {"sn": "HW52000000000008", "deviceName": "Device 08", "online": 1, "productName": "Smart Plug"},
+        {"sn": "HW52000000000009", "deviceName": "Device 09", "online": 1, "productName": "Smart Plug"},
+        {"sn": "HW52000000000010", "deviceName": "Device 10", "online": 1, "productName": "Smart Plug"},
+        {"sn": "HW52000000000011", "deviceName": "Device 11", "online": 1, "productName": "Smart Plug"},
+        {"sn": "R351000000000012", "deviceName": "Device 12", "online": 1, "productName": "DELTA 2 Max"},
+        {"sn": "R621000000000013", "online": 1, "productName": "RIVER 2 Pro"}
+    ],
+    "eagleEyeTraceId": "",
+    "tid": ""
+}

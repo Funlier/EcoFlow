@@ -18,7 +18,7 @@ final class ApiResponseTest extends TestCase
 
 
     /**
-     * @return iterable<string, array{Closure(EcoFlow): array<string, mixed>, string, string}>
+     * @return iterable<string, array{Closure(EcoFlow): array<string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>>, string, string}>
      */
     public static function provideQuotaReadErrors(): iterable
     {
@@ -36,7 +36,7 @@ final class ApiResponseTest extends TestCase
         foreach ($reads as $name => [$call, $prefix]) {
             yield $name . ' API message' => [
                 $call,
-                '{"code":"8513","message":"accessKey is invalid","data":null}',
+                '{"code":"8513","message":"accessKey is invalid","eagleEyeTraceId":"","tid":""}',
                 $prefix . 'accessKey is invalid',
             ];
             yield $name . ' no message falls back to the response' => [$call, '{"code":"1006"}', $prefix . '{"code":"1006"}'];
@@ -47,7 +47,7 @@ final class ApiResponseTest extends TestCase
 
 
     /**
-     * @param Closure(EcoFlow): array<string, mixed> $call
+     * @param Closure(EcoFlow): array<string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>> $call
      */
     #[DataProvider('provideQuotaReadErrors')]
     public function testQuotaReadsThrowOnEveryNonSuccessResponse(Closure $call, string $body, string $expected): void
@@ -99,12 +99,12 @@ final class ApiResponseTest extends TestCase
 
 
     /**
-     * @return iterable<string, array{Closure(EcoFlow): array<string, mixed>, string, string}>
+     * @return iterable<string, array{Closure(EcoFlow): array<string, array<int|string, int|string|array<string, int|string>>|string>, string, string}>
      */
     public static function provideAccountEndpoints(): iterable
     {
         $success = '{"code":"0","message":"Success","data":[{"sn":"SN1","online":1}],"eagleEyeTraceId":"e","tid":"t"}';
-        $failure = '{"code":"8513","message":"accessKey is invalid","data":null,"eagleEyeTraceId":"e","tid":"t"}';
+        $failure = '{"code":"8513","message":"accessKey is invalid","eagleEyeTraceId":"","tid":""}';
         $getDevices = static fn(EcoFlow $ecoFlow): array => $ecoFlow->getDevices();
         $getAppCertification = static fn(EcoFlow $ecoFlow): array => $ecoFlow->getAppCertification();
 
@@ -116,7 +116,7 @@ final class ApiResponseTest extends TestCase
 
 
     /**
-     * @param Closure(EcoFlow): array<string, mixed> $call
+     * @param Closure(EcoFlow): array<string, array<int|string, int|string|array<string, int|string>>|string> $call
      */
     #[DataProvider('provideAccountEndpoints')]
     public function testAccountEndpointsReturnTheDecodedResponse(Closure $call, string $path, string $body): void

@@ -25,7 +25,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * PHPMD counts the eight `@throws` docblock types as couplings; the runtime dependencies are five classes.
  *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ *
+ * @api
  */
 readonly class EcoFlow
 {
@@ -155,9 +157,8 @@ readonly class EcoFlow
      * If the request method is GET and parameters are provided, they are added to the query string of the URL. If the
      * request method is POST, PUT, or PATCH and parameters are provided, they are included in the body of the request.
      *
-     * The response from the request is returned as an associative array. The array includes the response code,
-     * message,
-     * data, eagle eye trace ID, and transaction ID.
+     * The decoded JSON response is returned as is. Its keys depend on the endpoint and on the outcome (an error
+     * response carries no `data`), so each endpoint method narrows it to its own shape.
      *
      * @param string $url The URL to send the request to.
      * @param string $method The HTTP request method (GET, POST, PUT, PATCH, etc.).
@@ -169,12 +170,12 @@ readonly class EcoFlow
      *                                                                 to pass data to the API or service being called.
      *
      * @return array{
-     *      code: string,
-     *      message?: string,
-     *      data: array<mixed>,
-     *      eagleEyeTraceId: string,
-     *      tid: string
-     *  } The response from the HTTP request as an associative array.
+     *     code?: string,
+     *     message?: string,
+     *     data?: array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>>,
+     *     eagleEyeTraceId?: string,
+     *     tid?: string
+     * } The decoded JSON response. `data` nests up to four array levels, as measured on live devices.
      *
      * @throws ClientExceptionInterface      If an error occurs when sending the request.
      * @throws DecodingExceptionInterface    If an error occurs when decoding the response.
@@ -204,16 +205,16 @@ readonly class EcoFlow
 
         /**
          * @var array{
-         *       code: string,
-         *       message?: string,
-         *       data: array<int, array{sn?: string, deviceName?: string, online?: bool}>,
-         *       eagleEyeTraceId: string,
-         *       tid: string
-         *   } $request
+         *     code?: string,
+         *     message?: string,
+         *     data?: array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>>,
+         *     eagleEyeTraceId?: string,
+         *     tid?: string
+         * } $response
          */
-        $request = $httpClient->request($method, $url, $options)->toArray();
+        $response = $httpClient->request($method, $url, $options)->toArray();
 
-        return $request;
+        return $response;
     }
 
 
@@ -232,7 +233,7 @@ readonly class EcoFlow
      *
      * @param string $deviceSN The serial number of the device.
      *
-     * @return array<string, array<string, array<string, int>|int|string>|int|string> The quota information for the
+     * @return array<string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>> The quota information for the
      *                                                                                device. This is an associative
      *                                                                                array where the keys are the
      *                                                                                quota names and the values are
@@ -271,16 +272,19 @@ readonly class EcoFlow
          * @var array{
          *     code?: string,
          *     message?: string,
-         *     data: array<string, int|string|array<string, int|string|array<string, int>>>
+         *     data?: array<string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>>
          * } $response
          */
         $response = $this->makeRequest($url, 'GET', $headers, $params);
 
         if (($response['code'] ?? null) === '0') {
-            $data = $response['data'];
+            // The API docs do not mark data as a required response field.
+            $data = $response['data'] ?? [];
 
             ksort($data, SORT_STRING);
 
+            // Phan drops the @var narrowing of $data after ksort() by reference; PHPStan and Psalm keep it.
+            // @phan-suppress-next-line PhanTypeMismatchReturn
             return $data;
         }
 
@@ -352,8 +356,6 @@ readonly class EcoFlow
             'timestamp' => $timestamp,
         ];
 
-        // EcoFlow error responses can omit code and message.
-        /** @var array{code?: string, message?: string} $response */
         $response = $this->makeRequest($url, 'PUT', $headers, $data);
 
         if (($response['code'] ?? null) === '0') {
@@ -408,8 +410,6 @@ readonly class EcoFlow
             'timestamp' => $timestamp,
         ];
 
-        // EcoFlow error responses can omit code and message.
-        /** @var array{code?: string, message?: string} $response */
         $response = $this->makeRequest($url, 'PUT', $headers, $data);
 
         if (($response['code'] ?? null) === '0') {
@@ -445,7 +445,7 @@ readonly class EcoFlow
      *                                            array where the keys are the parameter names and the values are the
      *                                            parameter values. Defaults to an empty array.
      *
-     * @return array<string, array<string, array<string, int>|int|string>|int|string> The requested quota values,
+     * @return array<string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>> The requested quota values,
      *                                                                                keyed by quota name, such as
      *                                                                                `['20_1.acSetWatts' => 8000]`.
      *
@@ -485,13 +485,14 @@ readonly class EcoFlow
          * @var array{
          *     code?: string,
          *     message?: string,
-         *     data: array<string, array<string, array<string, int>|int|string>|int|string>
+         *     data?: array<string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string|array<int|string, bool|float|int|string>>>>
          * } $response
          */
         $response = $this->makeRequest($url, 'POST', $headers, $data);
 
         if (($response['code'] ?? null) === '0') {
-            return $response['data'];
+            // The API docs do not mark data as a required response field.
+            return $response['data'] ?? [];
         }
 
         throw new RuntimeException(
@@ -515,15 +516,16 @@ readonly class EcoFlow
      * - Transaction ID
      *
      * @return array{
-     *      code: string,
+     *      code?: string,
      *      message?: string,
-     *      data: array<int, array{
+     *      data?: array<int, array{
      *          sn?: string,
      *          deviceName?: string,
-     *          online?: bool,
+     *          online?: int,
+     *          productName?: string,
      *      }>,
-     *      eagleEyeTraceId: string,
-     *      tid: string
+     *      eagleEyeTraceId?: string,
+     *      tid?: string
      *  } The list of devices. This is an associative array where the keys are the device attributes and the values are
      *    the attribute values.
      *
@@ -547,15 +549,16 @@ readonly class EcoFlow
 
         /**
          * @var array{
-         *       code: string,
+         *       code?: string,
          *       message?: string,
-         *       data: array<int, array{
+         *       data?: array<int, array{
          *           sn?: string,
          *           deviceName?: string,
-         *           online?: bool,
+         *           online?: int,
+         *           productName?: string,
          *       }>,
-         *       eagleEyeTraceId: string,
-         *       tid: string
+         *       eagleEyeTraceId?: string,
+         *       tid?: string
          *   } $return
          */
         $return = $this->makeRequest($url, 'GET', $headers);
@@ -573,17 +576,17 @@ readonly class EcoFlow
      * connection with the EcoFlow API.
      *
      * @return array{
-     *     code: string,
+     *     code?: string,
      *     message?: string,
-     *     data: array{
+     *     data?: array{
      *      certificateAccount: string,
      *      certificatePassword: string,
      *      url: string,
      *      port: string,
      *      protocol: string
      *     },
-     *     eagleEyeTraceId: string,
-     *     tid: string
+     *     eagleEyeTraceId?: string,
+     *     tid?: string
      * }
      *
      * @psalm-suppress PossiblyUnusedMethod
@@ -607,17 +610,17 @@ readonly class EcoFlow
 
         /**
          * @var array{
-         *      code: string,
+         *      code?: string,
          *      message?: string,
-         *      data: array{
+         *      data?: array{
          *       certificateAccount: string,
          *       certificatePassword: string,
          *       url: string,
          *       port: string,
          *       protocol: string
          *      },
-         *      eagleEyeTraceId: string,
-         *      tid: string
+         *      eagleEyeTraceId?: string,
+         *      tid?: string
          *  } $return
          */
         $return = $this->makeRequest($url, 'GET', $headers);
